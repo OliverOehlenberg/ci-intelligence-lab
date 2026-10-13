@@ -1,0 +1,27 @@
+pipeline:
+  id: pipeline_OliverOehlenberg_ci_intelligence_lab_build_317a
+  name: pipeline_OliverOehlenberg_ci_intelligence_lab_build_317a
+  stages:
+    - id: build_and_test
+      name: Build and Test
+      runtime: cloud
+      clone:
+        enabled: true
+      cache:
+        enabled: true
+      build-intelligence:
+        enabled: true
+      steps:
+        - id: build_test
+          name: Build and Test
+          run:
+            container:
+              image: maven:3.9-eclipse-temurin-17
+            shell: bash
+            script: mvn clean verify -DfailIfNoTests=false
+            report:
+              type: junit
+              paths:
+                - target/surefire-reports/*.xml
+  tags:
+    onboarding: "true"
